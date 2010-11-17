@@ -103,7 +103,7 @@ LuaHPDF depends on other software. In particular, I am grateful to
   [markdown.lua][10], Niklas Frykholm. This documentation is written in
   Markdown.
 
-* Andrea D'Amore who provided Makefile tips for compiling on OS X.
+* Andrea D'Amore who provided tips for compiling on OS X and packaging.
 
 License
 =======
