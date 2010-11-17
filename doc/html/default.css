@@ -1,0 +1,117 @@
+/* Debug borders */
+/* p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {border: 1px solid red;} */
+
+body {
+  margin-top:140px;
+  margin-bottom:30px;
+  margin-left: 30px;
+  width: 600px;
+  padding: 10px;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-size:small;
+}
+
+p {
+  padding:0;
+  line-height:1.3;
+}
+
+h1, h2, h3, h4 {
+  font-family:"Cochin","Palatino","Baskerville","Book Antiqua",
+    "Times New Roman",serif;
+}
+
+h1 {
+  color:#844;
+  font-size:150%;
+  margin-left:-25px;
+  margin-top:0.5em;
+  font-style:italic;
+}
+
+h2, h3, h4 {
+  margin-left:0;
+  margin-top:0;
+}
+
+h2 {
+  color:#A66;
+  font-size:135%;
+  font-style:italic;
+}
+
+h3 {
+  color:#844;
+  font-size:100%;
+  font-style:normal;
+}
+
+h4 {
+  font-size:100%;
+  font-style:normal;
+  color:#844;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin-bottom: 0.66em;
+}
+
+a:link, a:visited, a:link:hover, a:visited:hover {
+  color: #224;
+}
+
+code {
+  font-size:110%;
+  font-family: fixedsys, monospace;
+}
+
+p code {
+  color:#444;
+}
+
+pre {
+  margin: 0 1em 1em 1em;
+  border-style: solid;
+  background-color: #f2f2f2;
+  color:#666;
+  border-width:1px;
+  border-color:#aaa;
+  padding:0.5em 1em 0.5em 1em;
+}
+
+body {
+  background: white url(luahpdf.png) 0px 0px no-repeat;
+}
+
+div.footer {
+  border-width: 1px;
+  border-color: #888;
+  border-top-style:solid;
+  border-right-style:none;
+  border-bottom-style:none;
+  border-left-style:none;
+}
+
+div.footer p {
+  color:#888;
+  text-align: right;
+  font-size: 85%;
+  font-style: italic;
+}
+
+div.footer hr {
+  color: #888;
+  height: 0px;
+  border-style:solid;
+}
+
+div.footer a:link, div.footer a:visited, div.footer a:link:hover, div.footer
+  a:visited:hover
+{
+  color: #888;
+}
