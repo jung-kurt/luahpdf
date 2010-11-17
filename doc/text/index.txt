@@ -1,0 +1,125 @@
+Overview
+========
+
+LuaHPDF is a Lua module that lets you programmatically create PDF files using
+[Lua][1]. It does this by binding to the [Haru Free PDF Library][2a], an
+open-source library that manages the details of PDF generation.
+
+With this module, you can write Lua programs that will produce PDF files that
+include
+
+* lines, text and graphics
+* PNG and JPEG images
+* compression
+* encryption
+* Type1 and TrueType fonts
+* various character sets
+* outlines
+* links
+
+This module works on POSIX and Windows platforms.
+
+Implementation
+==============
+
+LuaHPDF conforms to the Lua 5.1 module standard. It provides a [thin
+binding][3] to the libharu library for PDF generation. The [differences][7] to
+the Haru application programming interface are minor, so you should be able to
+write Lua scripts using the documentation that is provided with the Haru
+library.
+
+Obtaining LuaHPDF
+=================
+
+The most recent version of the software is available from [Google Project
+Hosting][4]. The [change log][8] summarizes the release history for the
+software.
+
+Building and installing LuaHPDF
+===============================
+
+The Haru library and Lua must be properly installed on your system to build
+LuaHPDF. Each can be compiled easily from source code. Alternatively, each is
+available in binary form for a wide variety of platforms. See their respective
+websites for more details.
+
+Notes on [building LuaHPDF][6] guide you through compiling and installing the
+module on your system. Check out some of the features of the Haru library by
+[generating demonstration PDFs][12].
+
+Creating PDF files
+==================
+
+The steps in creating a basic PDF file with LuaHPDF include
+
+* loading the module with the 'require' function
+* creating a document
+* adding one or more pages
+* obtaining a font and registering it with a page
+* writing text
+* saving the file
+* freeing the document
+
+Here is a short example.
+
+    require "hpdf"
+
+    local pdf = hpdf.New()
+    if pdf then
+      local page = hpdf.AddPage(pdf)
+      local height = hpdf.Page_GetHeight(page)
+      local width = hpdf.Page_GetWidth(page)
+      local font = hpdf.GetFont(pdf, "Helvetica")
+      hpdf.Page_SetFontAndSize(page, font, 24)
+      hpdf.Page_BeginText(page)
+      hpdf.Page_TextOut(page, 60, height - 60, "Hello from Haru")
+      hpdf.Page_EndText(page)
+      hpdf.SaveToFile(pdf, "hello.pdf")
+      hpdf.Free(pdf)
+    else
+      io.write("Error creating PDF object\n")
+    end
+
+Other demonstration scripts are provided in the download package.
+
+Reporting issues
+================
+
+You're encouraged to provide suggestions and bug reports about LuaHPDF
+in this software's [issue tracker][11].
+
+Thanks
+======
+
+LuaHPDF depends on other software. In particular, I am grateful to
+
+* The authors of [Lua][1], Roberto Ierusalimschy, Luiz Henrique de Figueiredo,
+  Waldemar Celes.
+
+* The orignal author of the [Haru Free PDF Library][2a], Takeshi Kanno, and to
+  Antony Dovgal, who currently provides fixes and improvements to this library.
+
+* The author of [Markdown][9], John Gruber, and the author of
+  [markdown.lua][10], Niklas Frykholm. This documentation is written in
+  Markdown.
+
+* Andrea D'Amore who provided tips for compiling on OS X and packaging.
+
+License
+=======
+
+Like Lua, this software is released under the [MIT license][5].
+
+[1]:  http://www.lua.org/
+[2]:  http://libharu.sourceforge.net/
+[2a]: https://github.com/tony2001/libharu
+[3]:  binding-notes.html
+[4]:  http://code.google.com/p/luahpdf/downloads/list
+[5]:  license.html
+[6]:  build.html
+[7]:  binding-changes.html
+[8]:  change-log.html
+[9]:  http://daringfireball.net/projects/markdown/
+[10]: http://www.frykholm.se/files/markdown.lua
+[11]: http://code.google.com/p/luahpdf/issues/list
+[12]: demos.html

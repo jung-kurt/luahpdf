@@ -1,0 +1,61 @@
+# --- Change the settings below to suit your environment ---
+
+MINGW=/usr/i686-pc-mingw32/sys-root/mingw
+LUALIB=$(MINGW)/bin/lua51.dll
+HPDFLIB=$(MINGW)/bin/libhpdf.dll
+DOCDIR=/win32/doc
+PREFIX=/win32
+
+# --- End of user settings, no need to change anything below this line ---
+
+PACKAGE=luahpdf-1.0
+TARGET=hpdf.dll
+
+PDF = \
+	demo/arc_demo.pdf \
+	demo/encryption_demo.pdf \
+	demo/ext_gstate_demo.pdf \
+	demo/font_demo.pdf \
+	demo/grid_demo.pdf \
+	demo/hello_demo.pdf \
+	demo/line_demo.pdf \
+	demo/link_demo.pdf \
+	demo/logo_demo.pdf \
+	demo/outline_demo.pdf \
+	demo/permission_demo.pdf \
+	demo/slide_show_demo.pdf \
+	demo/text_demo.pdf
+
+HTML = \
+	doc/html/binding-changes.html \
+	doc/html/binding-notes.html \
+	doc/html/build.html \
+	doc/html/change-log.html \
+	doc/html/demos.html \
+	doc/html/index.html \
+	doc/html/license.html
+
+%.o : %.c
+	gcc -DHPDF_SHARED -shared -c $^ -o $@
+
+$(TARGET) : hpdf.o
+	gcc -Wall -shared -o $@ $< $(LUALIB) $(HPDFLIB)
+	strip $@
+
+all : $(TARGET) doc
+
+doc : $(HTML)
+
+demo : $(PDF)
+
+clean :
+	rm -f $(PDF) $(HTML) $(TARGET) $(TAR) $(ZIP) *.o
+
+.PHONY : all doc demo clean
+
+$(HTML): doc/html/%.html: doc/text/%.txt
+	lua doc/txt2html.lua < $< > $@
+
+$(PDF): %.pdf: %.lua
+	@luac -l -p $< | grep SETGLOBAL; true
+	lua $<
