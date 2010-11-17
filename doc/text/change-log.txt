@@ -11,7 +11,7 @@ Version 1.0: 2010-11-10
 * Link with Antony Dovgal's version of [libharu][1]
 
 * Guarded against assignment of zero element in pattern array passed to
-  [HPDF_Page_SetDash()][2]
+  [HPDF\_Page\_SetDash()][2]
 
 * Small documentation updates
 
