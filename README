@@ -1,0 +1,12 @@
+See documentation in doc/text (or equivalent documentation in HTML format in
+doc/html) for an explanation of what LuaHPDF is and how to compile and use it
+on your system.
+
+Quick summary:
+
+    make
+    sudo make install
+
+Alternatively, to install a local copy:
+
+    make DESTDIR=. install
