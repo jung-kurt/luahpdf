@@ -31,8 +31,9 @@ library.
 Obtaining LuaHPDF
 =================
 
-The most recent version of the software is available from [LuaForge][4]. The
-[change log][8] summarizes the release history for the software.
+The most recent version of the software is available from [Google Project
+Hosting][4]. The [change log][8] summarizes the release history for the
+software.
 
 Building and installing LuaHPDF
 ===============================
@@ -81,11 +82,11 @@ Here is a short example.
 
 Other demonstration scripts are provided in the download package.
 
-Discussion forum
+Reporting issues
 ================
 
-You're encouraged to provide comments, questions and suggestions about LuaHPDF
-in this software's [open discussion forum][11].
+You're encouraged to provide suggestions and bug reports about LuaHPDF
+in this software's [issue tracker][11].
 
 Thanks
 ======
@@ -113,12 +114,12 @@ Like Lua, this software is released under the [MIT license][5].
 [2]:  http://libharu.sourceforge.net/
 [2a]: https://github.com/tony2001/libharu
 [3]:  binding-notes.html
-[4]:  http://luaforge.net/frs/?group_id=246
+[4]:  http://code.google.com/p/luahpdf/downloads/list
 [5]:  license.html
 [6]:  build.html
 [7]:  binding-changes.html
 [8]:  change-log.html
 [9]:  http://daringfireball.net/projects/markdown/
 [10]: http://www.frykholm.se/files/markdown.lua
-[11]: http://luaforge.net/forum/forum.php?forum_id=1088
+[11]: http://code.google.com/p/luahpdf/issues/list
 [12]: demos.html
