@@ -41,7 +41,7 @@ HTML = \
 	doc/html/license.html
 
 $(TARGET) : hpdf.c
-	cc -ansi -DHPDF_SHARED -pedantic -Wall -O2 -o $@ $(LUAINC) $(HPDFINC) -shared $(LUALIB) $(HPDFLIB) $<
+	cc -ansi -DHPDF_SHARED -pedantic -Wall -O2 $(CFLAGS) $(LDFLAGS) -o $@ $(LUAINC) $(HPDFINC) -shared $(LUALIB) $(HPDFLIB) $<
 
 test : $(TARGET)
 	@lua -e "package.path=\"\" package.cpath=\"./?.so;./?.dll\" require \"hpdf\" print(hpdf.VERSION_TEXT)"
