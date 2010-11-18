@@ -40,7 +40,7 @@ HTML = \
 
 $(TARGET) : hpdf.o
 	gcc -Wall -shared -o $@ $< $(LUALIB) $(HPDFLIB)
-	strip $@
+	strip --strip-unneeded $@
 
 all : $(TARGET) doc
 
