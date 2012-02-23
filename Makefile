@@ -12,7 +12,7 @@ HPDFINC=
 # --- End of user settings, no need to change anything below this line. ---
 
 TARGET=hpdf.so
-PACKAGE=luahpdf-1.0
+PACKAGE=luahpdf-1.1
 TAR=$(PACKAGE).tar.gz
 ZIP=$(PACKAGE).zip
 
