@@ -9,6 +9,10 @@ $Id: hpdf.c 32002 2010-11-10 12:37:13Z kurt $
 #include "lauxlib.h"
 #include "hpdf.h"
 
+#ifndef HPDF_SHARED
+  typedef void *HPDF_HANDLE;
+#endif
+  
 #define CnHpdfStr "hpdf"
 
 #define CnHandleStr "hpdf_handle"
