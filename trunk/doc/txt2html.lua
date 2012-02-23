@@ -19,7 +19,7 @@ local FtrStr = [[
 
   <div class="footer">
 
-  <p>Copyright &copy; 2007,2010 Kurt Jung</p>
+  <p>Copyright &copy; 2007,2012 Kurt Jung</p>
 
   </div>
 
