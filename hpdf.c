@@ -2060,10 +2060,11 @@ static int LclFont_TextWidth(lua_State *L)
   /* Stk: ... */
   lua_newtable(L);
   /* Stk: ... Tbl */
+  
   LclSetIntField(L, result.numchars, "numchars");
-  LclSetIntField(L, result.numchars, "numwords");
-  LclSetIntField(L, result.numchars, "width");
-  LclSetIntField(L, result.numchars, "numspace");
+  LclSetIntField(L, result.numwords, "numwords");
+  LclSetIntField(L, result.width, "width");
+  LclSetIntField(L, result.numspace, "numspace");
   /* Stk: ... Tbl */
   return 1;
 }
