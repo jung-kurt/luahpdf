@@ -1,7 +1,15 @@
 Change log
 ==========
 
-This is a list of changes to LuaHPDF. The current version is 1.0.
+This is a list of changes to LuaHPDF. The current version is 1.1.
+
+Version 1.1: 2012-02-23
+-----------------------
+
+* Corrected bug with Font_TextWidth result table; thanks mjwhite0 for spotting this
+  and providing fix
+  
+* Define HPDF_HANDLE for static builds  
 
 Version 1.0: 2010-11-10
 -----------------------
