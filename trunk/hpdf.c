@@ -3538,10 +3538,10 @@ static int LclPage_TextOut(lua_State *L)
 static int LclPage_TextRect(lua_State *L)
 
   /* HPDF_STATUS <- hpdf.Page_TextRect(page, left, top,
-     right, bottom, text, align, len) */
+     right, bottom, text, align) */
 
 {
-  HPDF_UINT len, * len_ptr;
+  HPDF_UINT len;
   HPDF_STATUS result;
   HPDF_Page page = LclHandleGet(L, CnHndPage, 1);
   HPDF_REAL left = LclCheckReal(L, 2);
@@ -3551,15 +3551,12 @@ static int LclPage_TextRect(lua_State *L)
   const char * text = luaL_checkstring(L, 6);
   HPDF_TextAlignment align = luaL_checkoption(L, 7,
     (char *) 0, CnTextAlignment);
-  if (lua_isnumber(L, 8)) {
-    len = (HPDF_UINT) lua_tonumber(L, 8);
-    len_ptr = &len;
-  }
-  else len_ptr = (HPDF_UINT *) 0;
+  len = 0;
   result = HPDF_Page_TextRect(page, left, top, right, bottom, text,
-    align, len_ptr);
+    align, &len);
   lua_pushinteger(L, result);
-  return 1;
+  lua_pushinteger(L, len);
+  return 2;
 }
 
 /* * */
