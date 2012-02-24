@@ -92,6 +92,12 @@ LuaHPDF.
     Unlike `HPDF_Page_GetCurrentTextPos2` in the Haru API, this function
     accepts only the page handle and returns the current x and y text rendering
     positions.
+    
+* *result*, *len* = `hpdf.Page_TextRect(`*page*`,` *left*`,` *top*`,` *right*`,` *bottom*`,` *text*`,` *align*`)`
+
+    Unlike HPDF_Page_TextRect` in the Haru API, this function returns the 
+    function return code followed by the number of characters printed in the 
+    area.
 
 Various functions accept arguments and return values of type `HPDF_BOOL`. In
 these cases, a Lua boolean is used. Note that the value 0, since it is neither
