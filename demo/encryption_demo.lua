@@ -16,6 +16,7 @@ It is provided "as is" without express or implied warranty.
 --]]--
 
 require "hpdf"
+require "common"
 
 local pdf = hpdf.New()
 if pdf then
@@ -32,7 +33,7 @@ if pdf then
   hpdf.Page_ShowText(page, text)
   hpdf.Page_EndText (page)
   hpdf.SetPassword(pdf, "owner", "user")
-  hpdf.SaveToFile(pdf, string.gsub(arg[0], "%.%w*$", "") .. ".pdf")
+  save_to_file(pdf, arg[0])
   hpdf.Free(pdf)
 else
   io.write("Error creating PDF object\n")

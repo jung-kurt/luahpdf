@@ -106,3 +106,11 @@ function hpdf.print_grid(pdf, page)
   hpdf.Page_SetGrayStroke(page, 0)
 
 end -- hpdf.print_grid
+
+function save_to_file(pdf, script_name)
+  script_name = string.gsub(script_name, "%.%w*$", "") .. ".pdf"
+  if 0 ~= hpdf.SaveToFile(pdf, script_name) then
+    io.stderr:write('Error writing to ', script_name, '\n')
+  end
+end
+ 

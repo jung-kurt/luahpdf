@@ -784,9 +784,16 @@ static int LclSaveToFile(lua_State *L)
   /* HPDF_STATUS <- hpdf.SaveToFile(pdf, file_name) */
 
 {
+  FILE * fl;
+  HPDF_STATUS result;
   HPDF_Doc pdf = LclHandleGet(L, CnHndDoc, 1);
   const char * file_name = luaL_checkstring(L, 2);
-  HPDF_STATUS result = HPDF_SaveToFile(pdf, file_name);
+  fl = fopen(file_name, "w");
+  result = (fl == (FILE *) 0) ? 0x1016 : HPDF_OK;
+  if (HPDF_OK == result) {
+    fclose(fl);
+    result = HPDF_SaveToFile(pdf, file_name);
+  }   
   lua_pushinteger(L, result);
   return 1;
 }

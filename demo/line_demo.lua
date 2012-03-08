@@ -16,6 +16,7 @@ It is provided "as is" without express or implied warranty.
 --]]--
 
 require "hpdf"
+require "common"
 
 local function draw_line(page, x, y, label)
   hpdf.Page_BeginText(page)
@@ -301,7 +302,7 @@ if pdf then
   hpdf.Page_Stroke(page)
 
   -- save the document to a file
-  hpdf.SaveToFile(pdf, string.gsub(arg[0], "%.%w*$", "") .. ".pdf")
+  save_to_file(pdf, arg[0])
 
   -- clean up
   hpdf.Free(pdf)

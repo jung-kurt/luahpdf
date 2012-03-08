@@ -16,6 +16,7 @@ It is provided "as is" without express or implied warranty.
 --]]--
 
 require "hpdf"
+require "common"
 
 local text = "User cannot print and copy this document."
 local owner_passwd = "owner"
@@ -45,7 +46,7 @@ if pdf then
   hpdf.SetEncryptionMode(pdf, "HPDF_ENCRYPT_R3", 16)
 
   -- save the document to a file
-  hpdf.SaveToFile(pdf, string.gsub(arg[0], "%.%w*$", "") .. ".pdf")
+  save_to_file(pdf, arg[0])
 
   -- clean up
   hpdf.Free(pdf)

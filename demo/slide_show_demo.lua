@@ -16,6 +16,7 @@ It is provided "as is" without express or implied warranty.
 --]]--
 
 require "hpdf"
+require "common"
 
 local function print_page(page, style, font, page_prev, page_next)
 
@@ -111,7 +112,7 @@ if pdf then
     hpdf.SetPageMode(pdf, "HPDF_PAGE_MODE_FULL_SCREEN")
 
     -- save the document to a file
-    hpdf.SaveToFile(pdf, string.gsub(arg[0], "%.%w*$", "") .. ".pdf")
+    save_to_file(pdf, arg[0])
 
     -- clean up
     hpdf.Free(pdf)
