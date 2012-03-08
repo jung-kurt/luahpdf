@@ -16,6 +16,7 @@ It is provided "as is" without express or implied warranty.
 --]]--
 
 require "hpdf"
+require "common"
 
 local function print_page(pdf, font, page_num)
   local page = hpdf.AddPage(pdf)
@@ -30,7 +31,6 @@ local function print_page(pdf, font, page_num)
 end -- print_page
 
 local uri = "http://sourceforge.net/projects/libharu"
-local fname = string.gsub(arg[0], "%.%w*$", "") .. ".pdf"
 local pdf = hpdf.New()
 if pdf then
 
@@ -180,7 +180,7 @@ if pdf then
     hpdf.Page_EndText(index_page)
 
     -- save the document to a file
-    hpdf.SaveToFile(pdf, fname)
+    save_to_file(pdf, arg[0])
 
     -- clean up
     hpdf.Free(pdf)

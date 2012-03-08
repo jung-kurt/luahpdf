@@ -1,4 +1,5 @@
 require "hpdf"
+require "common"
 
 local function logodraw(pdf, page, width, left, bottom)
   local scale = 1 - math.sqrt(2) / 2
@@ -50,7 +51,7 @@ if pdf then
   local width = hpdf.Page_GetWidth(page)
   local edge = width / 2
   logodraw(pdf, page, edge, (width - edge) / 2, (height - edge) / 2)
-  hpdf.SaveToFile(pdf, string.gsub(arg[0], "%.%w*$", "") .. ".pdf")
+  save_to_file(pdf, arg[0])
   hpdf.Free(pdf)
 else
   io.write("Error creating PDF object\n")

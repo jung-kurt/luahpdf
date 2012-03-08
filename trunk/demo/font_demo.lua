@@ -16,6 +16,7 @@ It is provided "as is" without express or implied warranty.
 --]]--
 
 require "hpdf"
+require "common"
 
 local font_list = {
   "Courier",
@@ -34,7 +35,6 @@ local font_list = {
   "ZapfDingbats"}
 
 local page_title = "Font demonstration"
-local fname = string.gsub(arg[0], "%.%w*$", "") .. ".pdf"
 
 local pdf = hpdf.New()
 if pdf then
@@ -90,7 +90,7 @@ if pdf then
   end -- j, font_str
 
   hpdf.Page_EndText(page)
-  hpdf.SaveToFile(pdf, fname)
+  save_to_file(pdf, arg[0])
   hpdf.Free(pdf)
 
 else

@@ -16,6 +16,7 @@ It is provided "as is" without express or implied warranty.
 --]]--
 
 require "hpdf"
+require "common"
 
 local function print_page(page, page_num)
   hpdf.Page_SetWidth(page, 800)
@@ -32,7 +33,6 @@ local function create_dst(page, outline)
   hpdf.Outline_SetDestination(outline, dst)
 end -- create_dst
 
-local fname = string.gsub(arg[0], "%.%w*$", "") .. ".pdf"
 local pdf = hpdf.New()
 if pdf then
 
@@ -68,7 +68,7 @@ if pdf then
   end -- j
 
   -- save the document to a file
-  hpdf.SaveToFile(pdf, fname)
+  save_to_file(pdf, arg[0])
 
   -- clean up
   hpdf.Free(pdf)

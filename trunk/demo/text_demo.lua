@@ -16,7 +16,7 @@ It is provided "as is" without express or implied warranty.
 --]]--
 
 require "hpdf"
-require "grid_sheet"
+require "common"
 
 local function show_stripe_pattern(page, x, y)
 
@@ -264,7 +264,7 @@ if pdf then
   hpdf.Page_EndText(page)
 
   -- save the document to a file
-  hpdf.SaveToFile(pdf, string.gsub(arg[0], "%.%w*$", "") .. ".pdf")
+  save_to_file(pdf, arg[0])
 
   -- clean up
   hpdf.Free(pdf)

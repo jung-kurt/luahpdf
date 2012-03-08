@@ -12,7 +12,7 @@ HPDFINC=
 # --- End of user settings, no need to change anything below this line. ---
 
 TARGET=hpdf.so
-PACKAGE=luahpdf-1.1
+PACKAGE=luahpdf-1.2
 TAR=$(PACKAGE).tar.gz
 ZIP=$(PACKAGE).zip
 
@@ -43,6 +43,9 @@ HTML = \
 $(TARGET) : hpdf.c
 	cc -ansi -DHPDF_SHARED -pedantic -Wall -O2 $(CFLAGS) $(LDFLAGS) -o $@ $(LUAINC) $(HPDFINC) -shared $(LUALIB) $(HPDFLIB) $<
 
+dump : 
+	cc -E -dM -ansi -DHPDF_SHARED -pedantic -Wall -O2 $(CFLAGS) $(LUAINC) $(HPDFINC) -shared hpdf.c > $@
+
 test : $(TARGET)
 	@lua -e "package.path=\"\" package.cpath=\"./?.so;./?.dll\" require \"hpdf\" print(hpdf.VERSION_TEXT)"
 
@@ -69,7 +72,7 @@ package : clean doc
 	cp doc/text/*.txt $(PACKAGE)/doc/text
 	cp doc/html/*.css doc/html/*.png doc/html/*.html $(PACKAGE)/doc/html
 	cp demo/* $(PACKAGE)/demo
-	cp README Makefile hpdf.c grid_sheet.lua $(PACKAGE)
+	cp README Makefile hpdf.c $(PACKAGE)
 	tar czvf $(TAR) $(PACKAGE)
 	zip -r $(ZIP) $(PACKAGE)
 	rm -fr $(PACKAGE)
@@ -84,4 +87,4 @@ $(HTML): doc/html/%.html: doc/text/%.txt
 
 $(PDF): %.pdf: %.lua $(TARGET)
 	@luac -l -p $< | grep SETGLOBAL; true
-	lua -e 'package.path="./?.lua" package.cpath="./?.so"' $<
+	lua -e 'package.path="demo/?.lua;./?.lua" package.cpath="./?.so"' $<

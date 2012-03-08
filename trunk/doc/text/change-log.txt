@@ -1,10 +1,14 @@
 Change log
 ==========
 
-This is a list of changes to LuaHPDF. The current version is 1.1.
+This is a list of changes to LuaHPDF. The current version is 1.2.
 
-Version 1.2: unreleased
+Version 1.2: 2012-03-08
 -----------------------
+
+* Guard against passing name of unwriteable file to SaveToFile; thanks and.damore
+
+* Replace grid_sheet.lua in parent directory with common.lua in demo directory
 
 * Return number of characters printed by hpdf.Page_TextRect()
 

@@ -16,6 +16,7 @@ It is provided "as is" without express or implied warranty.
 --]]--
 
 require "hpdf"
+require "common"
 
 local function draw_circles(page, description, x, y)
   hpdf.Page_SetLineWidth(page, 1.0)
@@ -97,7 +98,7 @@ if pdf then
   end -- J, Rec
 
   -- save the document to a file
-  hpdf.SaveToFile(pdf, string.gsub(arg[0], "%.%w*$", "") .. ".pdf")
+  save_to_file(pdf, arg[0])
 
   -- clean up
   hpdf.Free(pdf)
