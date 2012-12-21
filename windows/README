@@ -1,0 +1,47 @@
+The following instructions and the two accompanying Makefiles are provided by
+Clerk Ma.
+
+The lib which I used is showed as below:
+
+  zlib     1.2.7       http://zlib.net/zlib-1.2.7.tar.gz
+  libpng   1.7.0       http://sourceforge.net/projects/libpng/files/libpng17/1.7.0alpha02/libpng-1.7.0alpha02.tar.bz2/download
+  luahpdf  1.3         http://luahpdf.googlecode.com/files/luahpdf-1.3.zip
+  libhpdf  2.3.0RC     http://libharu.org/files/libhpdf-2.3.0RC2.tar.gz
+  lua      5.1.5       http://www.lua.org/ftp/lua-5.1.5.tar.gz
+
+Instructions is here:
+
+  1. building zlib, unfolding the zlib-1.2.7 and rename it to zlib.
+
+      cd zlib
+      nmake -f win32\Makefile.msc
+
+  2. building libpng, unfolding the libpng-1.7.0alpha02.tar.bz2 and rename it
+     to libpng
+
+      cd libpng
+      nmake -f script\makefile.vcwin32
+
+  3. building lua, unfolding the lua-5.1.5.tar.gz and rename it to lua (some
+     people may using lua5.2, I still using lua5.1)
+
+      cd lua\src
+      cl /MD /Ox /W3 /c /DLUA_BUILD_AS_DLL *.c
+      del lua.obj luac.obj print.obj
+      link /DLL /IMPLIB:lua5.1.lib /OUT:lua5.1.dll *.obj
+
+  4. building libhpdf, unfolding the libhpdf-2.3.0RC2.tar.gz and rename it to
+     libhpdf, move the Makefile.msvc_CM to libhpdf\script\
+
+      cd libhpdf
+      nmake -f script Makefile.msvc_CM
+
+  5. building luahpdf, unfolding the luahpdf-1.3.zip, move the
+     Makefile.msvc_hpdf to the luahpdf fold
+
+      cd luahpdf-1.3
+      nmake -f  Makefile.msvc_hpdf
+
+building order: zlib -> libpng -> libhpdf -> lua -> luahpdf
+
+That is all.

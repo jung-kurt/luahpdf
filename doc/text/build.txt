@@ -87,6 +87,12 @@ To make the documentation, execute
 You'll need to manually copy hpdf.dll to the appropriate directory (part of
 LUA_CPATH) on your Windows system.
 
+Building a Windows binding with Visual Studio
+---------------------------------------------
+
+Clerk Ma has provided a README file and makefiles in the `windows` directory
+for Visual Studio users.
+
 Testing the installation
 ------------------------
 

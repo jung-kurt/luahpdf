@@ -4,15 +4,15 @@
 PREFIX=/usr/local
 MODDIR=$(PREFIX)/lib/lua/5.1
 DOCDIR=$(PREFIX)/share/doc/luahpdf
-LUALIB=-llua
-LUAINC=
+LUALIB=-llua5.1
+LUAINC=-I/usr/include/lua5.1
 HPDFLIB=-lhpdf
 HPDFINC=
 
 # --- End of user settings, no need to change anything below this line. ---
 
 TARGET=hpdf.so
-PACKAGE=luahpdf-1.2
+PACKAGE=luahpdf-1.3
 TAR=$(PACKAGE).tar.gz
 ZIP=$(PACKAGE).zip
 
@@ -40,16 +40,20 @@ HTML = \
 	doc/html/index.html \
 	doc/html/license.html
 
-$(TARGET) : hpdf.c
-	cc -ansi -DHPDF_SHARED -pedantic -Wall -O2 $(CFLAGS) $(LDFLAGS) -o $@ $(LUAINC) $(HPDFINC) -shared $(LUALIB) $(HPDFLIB) $<
+$(TARGET) : hpdf.o
+	cc -shared -fPIC $(STDLIB) $(LUALIB) -o $@ $^ $(LUALIB) $(HPDFLIB) -lz -lpng -lm
+	ldd ./$(TARGET)
 
-dump : 
+hpdf.o : hpdf.c
+	cc -DHPDF_SHARED $(LUAINC) $(HPDFINC) -Wall -O2 -fomit-frame-pointer -shared -fPIC -c -o $@ $<
+
+dump :
 	cc -E -dM -ansi -DHPDF_SHARED -pedantic -Wall -O2 $(CFLAGS) $(LUAINC) $(HPDFINC) -shared hpdf.c > $@
 
 test : $(TARGET)
-	@lua -e "package.path=\"\" package.cpath=\"./?.so;./?.dll\" require \"hpdf\" print(hpdf.VERSION_TEXT)"
+	@lua -e "package.path=[[]] package.cpath=[[./?.so;./?.dll]] require [[hpdf]] print(hpdf.VERSION_TEXT)"
 
-all : test 
+all : test
 
 install : $(TARGET) doc
 	install -m 0755 -d "$(DESTDIR)$(MODDIR)"
@@ -67,11 +71,12 @@ demo : $(PDF)
 
 package : clean doc
 	rm -fr $(PACKAGE)
-	mkdir -p $(PACKAGE)/doc/text $(PACKAGE)/doc/html $(PACKAGE)/demo
+	mkdir -p $(PACKAGE)/doc/text $(PACKAGE)/doc/html $(PACKAGE)/demo $(PACKAGE)/windows
 	cp doc/*.lua $(PACKAGE)/doc
 	cp doc/text/*.txt $(PACKAGE)/doc/text
 	cp doc/html/*.css doc/html/*.png doc/html/*.html $(PACKAGE)/doc/html
 	cp demo/* $(PACKAGE)/demo
+	cp windows/* $(PACKAGE)/windows
 	cp README Makefile hpdf.c $(PACKAGE)
 	tar czvf $(TAR) $(PACKAGE)
 	zip -r $(ZIP) $(PACKAGE)

@@ -12,7 +12,7 @@ $Id: hpdf.c 32002 2010-11-10 12:37:13Z kurt $
 #ifndef HPDF_SHARED
   typedef void *HPDF_HANDLE;
 #endif
-  
+
 #define CnHpdfStr "hpdf"
 
 #define CnHandleStr "hpdf_handle"
@@ -793,7 +793,7 @@ static int LclSaveToFile(lua_State *L)
   if (HPDF_OK == result) {
     fclose(fl);
     result = HPDF_SaveToFile(pdf, file_name);
-  }   
+  }
   lua_pushinteger(L, result);
   return 1;
 }
@@ -2067,7 +2067,7 @@ static int LclFont_TextWidth(lua_State *L)
   /* Stk: ... */
   lua_newtable(L);
   /* Stk: ... Tbl */
-  
+
   LclSetIntField(L, result.numchars, "numchars");
   LclSetIntField(L, result.numwords, "numwords");
   LclSetIntField(L, result.width, "width");
