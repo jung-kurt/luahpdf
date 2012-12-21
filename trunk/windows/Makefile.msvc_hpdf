@@ -1,0 +1,56 @@
+!IFNDEF HPDF_PREFIX
+HPDF_PREFIX = ..\libhpdf\include
+!ENDIF
+
+!IFNDEF PNG_PREFIX
+PNG_PREFIX = ..\libpng
+!ENDIF
+
+!IFNDEF ZLIB_PREFIX
+ZLIB_PREFIX = ..\zlib
+!ENDIF
+
+!IFNDEF LUA_PREFIX
+LUA_PREFIX = ..\lua\src
+!ENDIF
+
+CC=cl
+LINK=link
+LUA=lua
+
+DLLNAME=hpdf.dll
+
+CFLAGS=-c \
+	   -MT \
+	   -nologo \
+	   -O2 \
+	   -I"$(HPDF_PREFIX)" \
+	   -I"$(LUA_PREFIX)"
+LDFLAGS=-dll \
+		-out:$(DLLNAME)\
+		-export:luaopen_hpdf \
+		-libpath:"$(HPDF_PREFIX)\.." \
+		-libpath:"$(PNG_PREFIX)" \
+		-libpath:"$(ZLIB_PREFIX)" \
+		-libpath:"$(LUA_PREFIX)" \
+		-NODEFAULTLIB:libcmt.lib\
+		lua5.1.lib libhpdf.lib libpng.lib zlib.lib
+
+OBJ = hpdf.obj
+
+.SUFFIXES:  .c .obj
+
+all:$(DLLNAME)
+
+$(OBJ):
+	$(CC) $(CFLAGS) -Fo$@ $*.c
+
+$(DLLNAME):$(OBJ)
+	-@if exist $(DLLNAME) del $(DLLNAME)
+	$(LINK) $(LDFLAGS) $(OBJ)
+
+clean:
+	if exist demo\*.pdf del demo\*.pdf
+	if exist *.obj del *.obj
+	if exist *.exp del *.exp
+	if exist *.dll del *.dll

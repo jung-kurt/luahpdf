@@ -2,11 +2,15 @@ See documentation in doc/text (or equivalent documentation in HTML format in
 doc/html) for an explanation of what LuaHPDF is and how to compile and use it
 on your system.
 
+Developers on the Windows platform, please see notes provided by Clerk Ma in
+the windows directory.
+
 Quick summary:
 
-    make
-    sudo make install
+  * Edit the top lines of the Makefile
+  * Run 'make'
+  * Run 'sudo make install'
 
 Alternatively, to install a local copy:
 
-    make DESTDIR=. install
+  * Run 'make DESTDIR=. install'
