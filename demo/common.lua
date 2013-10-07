@@ -15,7 +15,7 @@ It is provided "as is" without express or implied warranty.
 
 --]]--
 
-require "hpdf"
+local hpdf = require "hpdf"
 
 function hpdf.print_grid(pdf, page)
   local height = hpdf.Page_GetHeight(page)
@@ -113,4 +113,4 @@ function save_to_file(pdf, script_name)
     io.stderr:write('Error writing to ', script_name, '\n')
   end
 end
- 
+

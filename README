@@ -2,8 +2,8 @@ See documentation in doc/text (or equivalent documentation in HTML format in
 doc/html) for an explanation of what LuaHPDF is and how to compile and use it
 on your system.
 
-Developers on the Windows platform, please see notes provided by Clerk Ma in
-the windows directory.
+In order to build the library on the Windows platform, please see notes
+provided by Clerk Ma in the windows directory.
 
 Quick summary:
 

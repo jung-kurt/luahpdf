@@ -16,11 +16,11 @@ library has been installed on your system. To do this, specify `./configure
 Examine the top portion of the included Makefile and, if needed, edit it to
 suit your environment.
 
-`PREFIX` specifies the directory that contains the lib/lua/5.1 path into which
+`PREFIX` specifies the directory that contains the lib/lua/5.2 path into which
 the HPDF binding will be installed. By default, this is `/usr/local`. If your
-standard directory for Lua modules is different than `/usr/local/lib/lua/5.1`,
+standard directory for Lua modules is different than `/usr/local/lib/lua/5.2`,
 then you will likely want to change this. For example, some distributions set
-up `/usr/lib/lua/5.1` as the Lua module directory; for these, you should set
+up `/usr/lib/lua/5.2` as the Lua module directory; for these, you should set
 `PREFIX` to `/usr`.
 
 `MODDIR` specifies the path under `PREFIX` into which the compiled binding will
@@ -30,11 +30,11 @@ be placed.
 will be installed.
 
 `LUALIB` by default is set to `-llua`. Your environment may require you to
-replace this with something like `-llua5.1`.
+replace this with something like `-llua5.2`.
 
 `LUAINC` by default is empty, meaning the Lua include files can be found in one
 of the standard places. Your environment may require you to replace this with
-something like `-I/usr/include/lua5.1`.
+something like `-I/usr/include/lua5.2`.
 
 Similarly, `HPDFLIB` and `HPDFINC` are by default `-lhpdf` and empty. Change
 these to suit your environment if needed.

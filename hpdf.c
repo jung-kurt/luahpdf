@@ -4,18 +4,16 @@ $Id: hpdf.c 32002 2010-11-10 12:37:13Z kurt $
 
 */
 
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-#include "hpdf.h"
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+#include <hpdf.h>
 
 #ifndef HPDF_SHARED
   typedef void *HPDF_HANDLE;
 #endif
 
 #define CnHpdfStr "hpdf"
-
-#define CnHandleStr "hpdf_handle"
 
 #define CnUnsupported 0
 
@@ -260,9 +258,7 @@ static void LclHandlePush(
 
 {
   /* Stk: ...  */
-  lua_pushstring(L, CnHandleStr);
-  /* Stk: ... HandleStr */
-  lua_rawget(L, LUA_ENVIRONINDEX);
+  lua_pushvalue(L, lua_upvalueindex(1));
   /* Stk: ... HndTbl */
   lua_pushlightuserdata(L, Hnd);
   /* Stk: ... HndTbl Hnd */
@@ -290,9 +286,7 @@ static HPDF_HANDLE LclHandleGet(
   luaL_argcheck(L, lua_isuserdata(L, StkPos), StkPos, "expecting handle");
   Hnd = lua_touserdata(L, StkPos);
   /* Stk: ...  */
-  lua_pushstring(L, CnHandleStr);
-  /* Stk: ... HandleStr */
-  lua_rawget(L, LUA_ENVIRONINDEX);
+  lua_pushvalue(L, lua_upvalueindex(1));
   /* Stk: ... HndTbl */
   lua_pushlightuserdata(L, Hnd);
   /* Stk: ... HndTbl Hnd */
@@ -565,9 +559,7 @@ static int LclGetHandleTable(lua_State *L)
 
 {
   /* Stk: ...  */
-  lua_pushstring(L, CnHandleStr);
-  /* Stk: ... HandleStr */
-  lua_rawget(L, LUA_ENVIRONINDEX);
+    lua_pushvalue(L, lua_upvalueindex(1));
   /* Stk: ... HndTbl */
   return 1;
 }
@@ -3733,7 +3725,7 @@ int luaopen_hpdf(
 
 {
 
-  static const luaL_reg HpdfMap[] = {
+  static const luaL_Reg HpdfMap[] = {
     {"GetHandleTable", LclGetHandleTable},
     {"GetVersion", LclGetVersion},
 #if CnUnsupported
@@ -3946,18 +3938,12 @@ int luaopen_hpdf(
 
   /* Stk: ModuleStr */
   lua_newtable(L);
-  /* Stk: ModuleStr EnvTbl */
-  lua_pushstring(L, CnHandleStr);
-  /* Stk: ModuleStr EnvTbl HandleStr */
+  /* Stk: ModuleStr ModuleTbl */
   lua_newtable(L);
-  /* Stk: ModuleStr EnvTbl HandleStr HandleTbl */
-  lua_rawset(L, -3);
-  /* Stk: ModuleStr EnvTbl */
-  lua_replace(L, LUA_ENVIRONINDEX);
-  /* Stk: ModuleStr */
-  luaL_register(L, CnHpdfStr, HpdfMap);
-  /* Stk: ModuleStr Namespace */
+  /* Stk: ModuleStr ModuleTbl HndTbl */
+  luaL_setfuncs(L, HpdfMap, 1);
+  /* Stk: ModuleStr ModuleTbl */
   LclConstRegister(L);
-  /* Stk: ModuleStr Namespace */
+  /* Stk: ModuleStr ModuleTbl */
   return 1;
 }

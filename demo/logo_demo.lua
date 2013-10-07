@@ -1,4 +1,4 @@
-require "hpdf"
+local hpdf = require "hpdf"
 require "common"
 
 local function logodraw(pdf, page, width, left, bottom)

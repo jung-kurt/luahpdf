@@ -15,7 +15,7 @@ It is provided "as is" without express or implied warranty.
 
 --]]--
 
-require "hpdf"
+local hpdf = require "hpdf"
 require "common"
 
 local font_list = {
