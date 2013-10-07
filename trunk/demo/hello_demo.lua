@@ -1,4 +1,4 @@
-require "hpdf"
+local hpdf = require "hpdf"
 require "common"
 
 local pdf = hpdf.New()

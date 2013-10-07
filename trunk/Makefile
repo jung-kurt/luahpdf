@@ -2,17 +2,19 @@
 # --- the build documentation for more details. ---
 
 PREFIX=/usr/local
-MODDIR=$(PREFIX)/lib/lua/5.1
+MODDIR=$(PREFIX)/lib/lua/5.2
 DOCDIR=$(PREFIX)/share/doc/luahpdf
-LUALIB=-llua5.1
-LUAINC=-I/usr/include/lua5.1
+LUALIB=-llua5.2
+LUAINC=-I/usr/include/lua5.2
 HPDFLIB=-lhpdf
 HPDFINC=
+LUA=lua
+LUAC=luac
 
 # --- End of user settings, no need to change anything below this line. ---
 
 TARGET=hpdf.so
-PACKAGE=luahpdf-1.3
+PACKAGE=luahpdf-1.4
 TAR=$(PACKAGE).tar.gz
 ZIP=$(PACKAGE).zip
 
@@ -51,7 +53,7 @@ dump :
 	cc -E -dM -ansi -DHPDF_SHARED -pedantic -Wall -O2 $(CFLAGS) $(LUAINC) $(HPDFINC) -shared hpdf.c > $@
 
 test : $(TARGET)
-	@lua -e "package.path=[[]] package.cpath=[[./?.so;./?.dll]] require [[hpdf]] print(hpdf.VERSION_TEXT)"
+	$(LUA) -e "package.path=[[]] package.cpath=[[./?.so;./?.dll]] local hpdf = require [[hpdf]] print(hpdf.VERSION_TEXT)"
 
 all : test
 
@@ -83,13 +85,13 @@ package : clean doc
 	rm -fr $(PACKAGE)
 
 clean :
-	rm -f $(PDF) $(HTML) $(TARGET) $(TAR) $(ZIP) *.o
+	rm -f $(PDF) $(HTML) $(TARGET) $(TAR) $(ZIP) *.o dump
 
 .PHONY : main doc demo clean lib package test install
 
 $(HTML): doc/html/%.html: doc/text/%.txt
-	lua doc/txt2html.lua < $< > $@
+	$(LUA) doc/txt2html.lua < $< > $@
 
 $(PDF): %.pdf: %.lua $(TARGET)
-	@luac -l -p $< | grep SETGLOBAL; true
-	lua -e 'package.path="demo/?.lua;./?.lua" package.cpath="./?.so"' $<
+	@$(LUAC) -l -p $< | grep SETGLOBAL; true
+	$(LUA) -e 'package.path="demo/?.lua;./?.lua" package.cpath="./?.so"' $<

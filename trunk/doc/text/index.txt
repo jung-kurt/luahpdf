@@ -22,7 +22,7 @@ This module works on POSIX and Windows platforms.
 Implementation
 ==============
 
-LuaHPDF conforms to the Lua 5.1 module standard. It provides a [thin
+LuaHPDF conforms to the Lua 5.2 module standard. It provides a [thin
 binding][3] to the libharu library for PDF generation. The [differences][7] to
 the Haru application programming interface are minor, so you should be able to
 write Lua scripts using the documentation that is provided with the Haru
