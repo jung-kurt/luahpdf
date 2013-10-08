@@ -10,13 +10,21 @@ HPDFLIB=-lhpdf
 HPDFINC=
 LUA=lua
 LUAC=luac
+PLATFORM=linux
+# PLATFORM=macosx
 
 # --- End of user settings, no need to change anything below this line. ---
 
 TARGET=hpdf.so
-PACKAGE=luahpdf-1.4
+PACKAGE=luahpdf-1.5
 TAR=$(PACKAGE).tar.gz
 ZIP=$(PACKAGE).zip
+linux_COMPILE=cc -DHPDF_SHARED $(LUAINC) $(HPDFINC) -Wall -O2 -fomit-frame-pointer -shared -fPIC -c -o $@ $<
+linux_LINK=cc -shared -fPIC -o $@ $^ $(HPDFLIB) -lz -lpng -lm
+linux_REPORT=ldd ./$(TARGET)
+macosx_COMPILE=cc -DHPDF_SHARED $(LUAINC) $(HPDFINC) -DLUA_USE_MACOSX -Wall -O2 -fomit-frame-pointer -fPIC -c -o $@ $<
+macosx_LINK=cc -bundle -undefined dynamic_lookup -DLUA_USE_MACOSX $(HPDFLIB) -lz -lpng -o hpdf.so hpdf.o
+macosx_REPORT=otool -L ./$(TARGET)
 
 PDF = \
 	demo/arc_demo.pdf \
@@ -43,11 +51,11 @@ HTML = \
 	doc/html/license.html
 
 $(TARGET) : hpdf.o
-	cc -shared -fPIC $(STDLIB) $(LUALIB) -o $@ $^ $(LUALIB) $(HPDFLIB) -lz -lpng -lm
-	ldd ./$(TARGET)
+	$($(PLATFORM)_LINK)
+	$($(PLATFORM)_REPORT)
 
 hpdf.o : hpdf.c
-	cc -DHPDF_SHARED $(LUAINC) $(HPDFINC) -Wall -O2 -fomit-frame-pointer -shared -fPIC -c -o $@ $<
+	$($(PLATFORM)_COMPILE)
 
 dump :
 	cc -E -dM -ansi -DHPDF_SHARED -pedantic -Wall -O2 $(CFLAGS) $(LUAINC) $(HPDFINC) -shared hpdf.c > $@
