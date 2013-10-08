@@ -1,3 +1,6 @@
+# NOTE: This makefile has not been tested recently. If you can get it to work,
+# please report changes to the issues forum for this project.
+
 # --- Change the settings below to suit your environment ---
 
 MINGW=/usr/i686-pc-mingw32/sys-root/mingw

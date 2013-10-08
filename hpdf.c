@@ -2739,7 +2739,7 @@ static int LclPage_SetDash(lua_State *L)
   else {
     luaL_argcheck(L, lua_istable(L, 2), 2, "expecting dash mode table");
     mode.num_ptn = luaL_checkinteger(L, 3);
-    if ((mode.num_ptn >= 0) && (mode.num_ptn <= 8)) {
+    if (mode.num_ptn <= 8) {
       mode.phase = luaL_checkinteger(L, 4);
       for (J = 0; J < mode.num_ptn; J++) {
         int Dash;

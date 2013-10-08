@@ -14,7 +14,8 @@ library has been installed on your system. To do this, specify `./configure
 --shared` when compiling it.
 
 Examine the top portion of the included Makefile and, if needed, edit it to
-suit your environment.
+suit your environment. In particular, uncomment the appropriate PLATFORM
+(currently, linux or macosx) and comment the other.
 
 `PREFIX` specifies the directory that contains the lib/lua/5.2 path into which
 the HPDF binding will be installed. By default, this is `/usr/local`. If your
