@@ -31,9 +31,8 @@ library.
 Obtaining LuaHPDF
 =================
 
-The most recent version of the software is available from [Google Project
-Hosting][4]. The [change log][8] summarizes the release history for the
-software.
+The most recent version of the software is available from [Github][4]. The
+[change log][8] summarizes the release history for the software.
 
 Building and installing LuaHPDF
 ===============================
@@ -108,14 +107,14 @@ License
 Like Lua, this software is released under the [MIT license][5].
 
 [1]:  http://www.lua.org/
-[2]: http://libharu.org/
+[2]:  http://libharu.org/
 [3]:  binding-notes.html
-[4]:  http://code.google.com/p/luahpdf/downloads/list
+[4]:  https://github.com/jung-kurt/luahpdf
 [5]:  license.html
 [6]:  build.html
 [7]:  binding-changes.html
 [8]:  change-log.html
 [9]:  http://daringfireball.net/projects/markdown/
 [10]: http://www.frykholm.se/files/markdown.lua
-[11]: http://code.google.com/p/luahpdf/issues/list
+[11]: https://github.com/jung-kurt/luahpdf/issues
 [12]: demos.html
