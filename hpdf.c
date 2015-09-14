@@ -1637,6 +1637,19 @@ static int LclUseCNTEncodings(lua_State *L)
 
 /* * */
 
+static int LclUseUTFEncodings(lua_State *L)
+
+  /* HPDF_STATUS <- hpdf.UseUTFEncodings(pdf) */
+
+{
+  HPDF_Doc pdf = LclHandleGet(L, CnHndDoc, 1);
+  HPDF_STATUS result = HPDF_UseUTFEncodings(pdf);
+  lua_pushinteger(L, result);
+  return 1;
+}
+
+/* * */
+
 static int LclPage_CreateTextAnnot(lua_State *L)
 
   /* HPDF_Annotation <- hpdf.Page_CreateTextAnnot(page, rect, text, encoder) */
@@ -3927,6 +3940,7 @@ int luaopen_hpdf(
     {"UseKREncodings", LclUseKREncodings},
     {"UseCNSEncodings", LclUseCNSEncodings},
     {"UseCNTEncodings", LclUseCNTEncodings},
+    {"UseUTFEncodings", LclUseUTFEncodings},
     {"Page_CreateTextAnnot", LclPage_CreateTextAnnot},
     {"Page_CreateLinkAnnot", LclPage_CreateLinkAnnot},
     {"Page_CreateURILinkAnnot", LclPage_CreateURILinkAnnot},
