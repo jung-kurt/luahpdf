@@ -2237,7 +2237,11 @@ static int LclFont_MeasureText(lua_State *L)
   result = HPDF_Font_MeasureText(font, text, len, width,
     font_size, char_space, word_space, wordwrap, real_width_ptr);
   lua_pushinteger(L, result);
-  return 1;
+  if (real_width_ptr) {
+    lua_pushnumber(L, real_width);
+    return 2;
+  } else
+    return 1;
 }
 
 /* * */
