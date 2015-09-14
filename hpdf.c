@@ -2214,22 +2214,23 @@ static int LclFont_TextWidth(lua_State *L)
 
 static int LclFont_MeasureText(lua_State *L)
 
-  /* integer <- hpdf.Font_MeasureText(font, text, len, width,
+  /* integer <- hpdf.Font_MeasureText(font, text, width,
      font_size, char_space, word_space, wordwrap, real_width) */
 
 {
   HPDF_UINT result;
   HPDF_REAL real_width, * real_width_ptr;
   HPDF_Font font = LclHandleGet(L, CnHndFont, 1);
-  const HPDF_BYTE * text = (HPDF_BYTE *) luaL_checkstring(L, 2);
-  HPDF_UINT len = luaL_checkinteger(L, 3);
-  HPDF_REAL width = LclCheckReal(L, 4);
-  HPDF_REAL font_size = LclCheckReal(L, 5);
-  HPDF_REAL char_space = LclCheckReal(L, 6);
-  HPDF_REAL word_space = LclCheckReal(L, 7);
-  HPDF_BOOL wordwrap = lua_toboolean(L, 8);
-  if (lua_isnumber(L, 9)) {
-    real_width = (HPDF_REAL) lua_tonumber(L, 9);
+  size_t len_;
+  const HPDF_BYTE * text = (HPDF_BYTE *) luaL_checklstring(L, 2, &len_);
+  HPDF_UINT len = (HPDF_UINT)len_;
+  HPDF_REAL width = LclCheckReal(L, 3);
+  HPDF_REAL font_size = LclCheckReal(L, 4);
+  HPDF_REAL char_space = LclCheckReal(L, 5);
+  HPDF_REAL word_space = LclCheckReal(L, 6);
+  HPDF_BOOL wordwrap = lua_toboolean(L, 7);
+  if (lua_isnumber(L, 8)) {
+    real_width = (HPDF_REAL) lua_tonumber(L, 8);
     real_width_ptr = &real_width;
   }
   else real_width_ptr = (HPDF_REAL *) 0;
