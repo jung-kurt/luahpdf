@@ -1,16 +1,18 @@
+include .config
+
 # --- Change the settings below to suit your environment. See explanations in
 # --- the build documentation for more details. ---
 
-PREFIX=/usr/local
-MODDIR=$(PREFIX)/lib/lua/5.2
-DOCDIR=$(PREFIX)/share/doc/luahpdf
-LUALIB=-llua5.2
-LUAINC=-I/usr/include/lua5.2
-HPDFLIB=-lhpdf
-HPDFINC=
-LUA=lua
-LUAC=luac
-PLATFORM=linux
+PREFIX ?= /usr/local
+MODDIR ?= $(PREFIX)/lib/lua/5.2
+DOCDIR ?= $(PREFIX)/share/doc/luahpdf
+LUALIB ?= -llua5.2
+LUAINC ?= -I/usr/include/lua5.2
+HPDFLIB ?= -lhpdf
+HPDFINC ?=
+LUA ?= lua
+LUAC ?= luac
+PLATFORM ?= linux
 # PLATFORM=macosx
 
 # --- End of user settings, no need to change anything below this line. ---
@@ -71,7 +73,7 @@ install : $(TARGET) doc
 	install -m 0755 -d "$(DESTDIR)$(DOCDIR)"
 	install -m 0755 -d "$(DESTDIR)$(DOCDIR)/text"
 	install -m 0755 -d "$(DESTDIR)$(DOCDIR)/html"
-	install -m 0644 README doc/*.lua "$(DESTDIR)$(DOCDIR)"
+	install -m 0644 README.md doc/*.lua "$(DESTDIR)$(DOCDIR)"
 	install -m 0644 doc/text/*.txt "$(DESTDIR)$(DOCDIR)/text"
 	install -m 0644 doc/html/*.html doc/html/*.css doc/html/*.png "$(DESTDIR)$(DOCDIR)/html"
 
