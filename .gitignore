@@ -1,2 +1,5 @@
-# Ignore generated documentation
-*.html
+*.0
+demo/*.pdf
+hpdf.o
+hpdf.so
+*.swp
