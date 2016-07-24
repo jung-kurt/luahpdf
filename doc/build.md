@@ -109,5 +109,5 @@ for the module.
 See the [demos][1] page for instructions on generating the demonstration PDF
 files.
 
-[1]: demos.html
+[1]: demos.md
 [2]: http://mingw-cross.sourceforge.net/

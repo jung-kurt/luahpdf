@@ -5,7 +5,6 @@ include .config
 
 PREFIX ?= /usr/local
 MODDIR ?= $(PREFIX)/lib/lua/5.2
-DOCDIR ?= $(PREFIX)/share/doc/luahpdf
 LUALIB ?= -llua5.2
 LUAINC ?= -I/usr/include/lua5.2
 HPDFLIB ?= -lhpdf
@@ -43,15 +42,6 @@ PDF = \
 	demo/slide_show_demo.pdf \
 	demo/text_demo.pdf
 
-HTML = \
-	doc/html/binding-changes.html \
-	doc/html/binding-notes.html \
-	doc/html/build.html \
-	doc/html/change-log.html \
-	doc/html/demos.html \
-	doc/html/index.html \
-	doc/html/license.html
-
 $(TARGET) : hpdf.o
 	$($(PLATFORM)_LINK)
 	$($(PLATFORM)_REPORT)
@@ -67,26 +57,15 @@ test : $(TARGET)
 
 all : test
 
-install : $(TARGET) doc
+install : $(TARGET)
 	install -m 0755 -d "$(DESTDIR)$(MODDIR)"
 	install -m 0755 $(TARGET) "$(DESTDIR)$(MODDIR)"
-	install -m 0755 -d "$(DESTDIR)$(DOCDIR)"
-	install -m 0755 -d "$(DESTDIR)$(DOCDIR)/text"
-	install -m 0755 -d "$(DESTDIR)$(DOCDIR)/html"
-	install -m 0644 README.md doc/*.lua "$(DESTDIR)$(DOCDIR)"
-	install -m 0644 doc/text/*.txt "$(DESTDIR)$(DOCDIR)/text"
-	install -m 0644 doc/html/*.html doc/html/*.css doc/html/*.png "$(DESTDIR)$(DOCDIR)/html"
-
-doc : $(HTML)
 
 demo : $(PDF)
 
-package : clean doc
+package : clean 
 	rm -fr $(PACKAGE)
-	mkdir -p $(PACKAGE)/doc/text $(PACKAGE)/doc/html $(PACKAGE)/demo $(PACKAGE)/windows
-	cp doc/*.lua $(PACKAGE)/doc
-	cp doc/text/*.txt $(PACKAGE)/doc/text
-	cp doc/html/*.css doc/html/*.png doc/html/*.html $(PACKAGE)/doc/html
+	mkdir -p $(PACKAGE)/demo $(PACKAGE)/windows
 	cp demo/* $(PACKAGE)/demo
 	cp windows/* $(PACKAGE)/windows
 	cp README Makefile hpdf.c $(PACKAGE)
@@ -95,12 +74,9 @@ package : clean doc
 	rm -fr $(PACKAGE)
 
 clean :
-	rm -f $(PDF) $(HTML) $(TARGET) $(TAR) $(ZIP) *.o dump
+	rm -f $(PDF) $(TARGET) $(TAR) $(ZIP) *.o dump
 
-.PHONY : main doc demo clean lib package test install
-
-$(HTML): doc/html/%.html: doc/text/%.txt
-	$(LUA) doc/txt2html.lua < $< > $@
+.PHONY : main demo clean lib package test install
 
 $(PDF): %.pdf: %.lua $(TARGET)
 	@$(LUAC) -l -p $< | grep SETGLOBAL; true
