@@ -247,6 +247,118 @@ const char * CnTransitionStyle[] = {
   "HPDF_TS_EOF",
   NULL};
 
+typedef struct LclErrMsgStruct
+{
+  int value;
+  const char * name;
+} LclErrMsgType;
+
+const LclErrMsgType CnErrorMessages[] = {
+  {HPDF_ARRAY_COUNT_ERR, "Internal error. Data consistency was lost."},
+  {HPDF_ARRAY_ITEM_NOT_FOUND, "Internal error. Data consistency was lost."},
+  {HPDF_ARRAY_ITEM_UNEXPECTED_TYPE, "Internal error. Data consistency was lost."},
+  {HPDF_BINARY_LENGTH_ERR, "Data length > HPDF_LIMIT_MAX_STRING_LEN."},
+  {HPDF_CANNOT_GET_PALLET, "Cannot get pallet data from PNG image."},
+  {HPDF_DICT_COUNT_ERR, "Dictionary elements > HPDF_LIMIT_MAX_DICT_ELEMENT"},
+  {HPDF_DICT_ITEM_NOT_FOUND, "Internal error. Data consistency was lost."},
+  {HPDF_DICT_ITEM_UNEXPECTED_TYPE, "Internal error. Data consistency was lost."},
+  {HPDF_DICT_STREAM_LENGTH_NOT_FOUND, "Internal error. Data consistency was lost."},
+  {HPDF_DOC_ENCRYPTDICT_NOT_FOUND, "HPDF_SetEncryptMode() or HPDF_SetPermission() called before password set."},
+  {HPDF_DOC_INVALID_OBJECT, "Internal error. Data consistency was lost."},
+  {HPDF_DUPLICATE_REGISTRATION, "Tried to re-register a registered font."},
+  {HPDF_EXCEED_JWW_CODE_NUM_LIMIT, "Cannot register a character to the Japanese word wrap characters list."},
+  {HPDF_ENCRYPT_INVALID_PASSWORD, "1. Tried to set the owner password to NULL.\n"
+    "2. Owner and user password are the same."},
+  {HPDF_ERR_UNKNOWN_CLASS, "Internal error. Data consistency was lost."},
+  {HPDF_EXCEED_GSTATE_LIMIT, "Stack depth > HPDF_LIMIT_MAX_GSTATE."},
+  {HPDF_FAILD_TO_ALLOC_MEM, "Memory allocation failed."},
+  {HPDF_FILE_IO_ERROR, "File processing failed. (Detailed code is set.)"},
+  {HPDF_FILE_OPEN_ERROR, "Cannot open a file. (Detailed code is set.)"},
+  {HPDF_FONT_EXISTS, "Tried to load a font that has been registered."},
+  {HPDF_FONT_INVALID_WIDTHS_TABLE, "1. Font-file format is invalid.\n"
+    "2. Internal error. Data consistency was lost."},
+  {HPDF_INVALID_AFM_HEADER, "Cannot recognize header of afm file."},
+  {HPDF_INVALID_ANNOTATION, "Specified annotation handle is invalid."},
+  {HPDF_INVALID_BIT_PER_COMPONENT, "Bit-per-component of a image which was set as mask-image is invalid."},
+  {HPDF_INVALID_CHAR_MATRICS_DATA, "Cannot recognize char-matrics-data of afm file."},
+  {HPDF_INVALID_COLOR_SPACE, "1. Invalid color_space parameter of HPDF_LoadRawImage.\n"
+    "2. Color-space of a image which was set as mask-image is invalid.\n"
+    "3. Invoked function invalid in present color-space."},
+  {HPDF_INVALID_COMPRESSION_MODE, "Invalid value set when invoking HPDF_SetCommpressionMode()."},
+  {HPDF_INVALID_DATE_TIME, "An invalid date-time value was set."},
+  {HPDF_INVALID_DESTINATION, "An invalid destination handle was set."},
+  {HPDF_INVALID_DOCUMENT, "An invalid document handle was set."},
+  {HPDF_INVALID_DOCUMENT_STATE, "Function invalid in the present state was invoked."},
+  {HPDF_INVALID_ENCODER, "An invalid encoder handle was set."},
+  {HPDF_INVALID_ENCODER_TYPE, "Combination between font and encoder is wrong."},
+  {HPDF_INVALID_ENCODING_NAME, "An Invalid encoding name is specified."},
+  {HPDF_INVALID_ENCRYPT_KEY_LEN, "Encryption key length is invalid."},
+  {HPDF_INVALID_FONTDEF_DATA, "1. An invalid font handle was set.\n"
+    "2. Unsupported font format."},
+  {HPDF_INVALID_FONTDEF_TYPE, "Internal error. Data consistency was lost."},
+  {HPDF_INVALID_FONT_NAME, "Font with the specified name is not found."},
+  {HPDF_INVALID_IMAGE, "Unsupported image format."},
+  {HPDF_INVALID_JPEG_DATA, "Unsupported image format."},
+  {HPDF_INVALID_N_DATA, "Cannot read a postscript-name from an afm file."},
+  {HPDF_INVALID_OBJECT, "1. An invalid object is set.\n"
+    "2. Internal error. Data consistency was lost."},
+  {HPDF_INVALID_OBJ_ID, "Internal error. Data consistency was lost."},
+  {HPDF_INVALID_OPERATION, "Invoked HPDF_Image_SetColorMask() against the image-object which was set a mask-image."},
+  {HPDF_INVALID_OUTLINE, "An invalid outline-handle was specified."},
+  {HPDF_INVALID_PAGE, "An invalid page-handle was specified."},
+  {HPDF_INVALID_PAGES, "An invalid pages-handle was specified. (internal error)"},
+  {HPDF_INVALID_PARAMETER, "An invalid value is set."},
+  {HPDF_INVALID_PNG_IMAGE, "Invalid PNG image format."},
+  {HPDF_INVALID_STREAM, "Internal error. Data consistency was lost."},
+  {HPDF_MISSING_FILE_NAME_ENTRY, "Internal error. \"_FILE_NAME\" entry for delayed loading is missing."},
+  {HPDF_INVALID_TTC_FILE, "Invalid .TTC file format."},
+  {HPDF_INVALID_TTC_INDEX, "Index parameter > number of included fonts."},
+  {HPDF_INVALID_WX_DATA, "Cannot read a width-data from an afm file."},
+  {HPDF_ITEM_NOT_FOUND, "Internal error. Data consistency was lost."},
+  {HPDF_LIBPNG_ERROR, "Error returned from PNGLIB while loading image."},
+  {HPDF_NAME_INVALID_VALUE, "Internal error. Data consistency was lost."},
+  {HPDF_NAME_OUT_OF_RANGE, "Internal error. Data consistency was lost."},
+  {HPDF_PAGES_MISSING_KIDS_ENTRY, "Internal error. Data consistency was lost."},
+  {HPDF_PAGE_CANNOT_FIND_OBJECT, "Internal error. Data consistency was lost."},
+  {HPDF_PAGE_CANNOT_GET_ROOT_PAGES, "Internal error. Data consistency was lost."},
+  {HPDF_PAGE_CANNOT_RESTORE_GSTATE, "There are no graphics-states to be restored."},
+  {HPDF_PAGE_CANNOT_SET_PARENT, "Internal error. Data consistency was lost."},
+  {HPDF_PAGE_FONT_NOT_FOUND, "The current font is not set."},
+  {HPDF_PAGE_INVALID_FONT, "An invalid font-handle was specified."},
+  {HPDF_PAGE_INVALID_FONT_SIZE, "An invalid font-size was set."},
+  {HPDF_PAGE_INVALID_GMODE, "Invalid Graphics mode."},
+  {HPDF_PAGE_INVALID_INDEX, "Internal error. Data consistency was lost."},
+  {HPDF_PAGE_INVALID_ROTATE_VALUE, "Specified value is not multiple of 90."},
+  {HPDF_PAGE_INVALID_SIZE, "An invalid page-size was set."},
+  {HPDF_PAGE_INVALID_XOBJECT, "An invalid image-handle was set."},
+  {HPDF_PAGE_OUT_OF_RANGE, "The specified value is out of range."},
+  {HPDF_REAL_OUT_OF_RANGE, "The specified value is out of range."},
+  {HPDF_STREAM_EOF, "Unexpected EOF marker was detected."},
+  {HPDF_STREAM_READLN_CONTINUE, "Internal error. Data consistency was lost."},
+  {HPDF_STRING_OUT_OF_RANGE, "The length of the text is too long."},
+  {HPDF_THIS_FUNC_WAS_SKIPPED, "Function not executed because of other errors."},
+  {HPDF_TTF_CANNOT_EMBEDDING_FONT, "Font cannot be embedded. (license restriction)"},
+  {HPDF_TTF_INVALID_CMAP, "Unsupported ttf format. (cannot find unicode cmap)"},
+  {HPDF_TTF_INVALID_FOMAT, "Unsupported ttf format."},
+  {HPDF_TTF_MISSING_TABLE, "Unsupported ttf format. (cannot find a necessary table)"},
+  {HPDF_UNSUPPORTED_FONT_TYPE, "Internal error. Data consistency was lost."},
+  {HPDF_UNSUPPORTED_FUNC, "1. Library not configured to use PNGLIB.\n"
+    "2. Internal error. Data consistency was lost."},
+  {HPDF_UNSUPPORTED_JPEG_FORMAT, "Unsupported JPEG format."},
+  {HPDF_UNSUPPORTED_TYPE1_FONT, "Failed to parse .PFB file."},
+  {HPDF_XREF_COUNT_ERR, "Internal error. Data consistency was lost."},
+  {HPDF_ZLIB_ERROR, "Error while executing ZLIB function."},
+  {HPDF_INVALID_PAGE_INDEX, "An invalid page index was passed."},
+  {HPDF_INVALID_URI, "An invalid URI was set."},
+  /*{HPDF_PAGELAYOUT_OUT_OF_RANGE, "An invalid page-layout was set."},*/
+  /*{HPDF_PAGEMODE_OUT_OF_RANGE, "An invalid page-mode was set."},*/
+  /*{HPDF_PAGENUM_STYLE_OUT_OF_RANGE, "An invalid page-num-style was set."},*/
+  {HPDF_ANNOT_INVALID_ICON, "An invalid icon was set."},
+  {HPDF_ANNOT_INVALID_BORDER_STYLE, "An invalid border-style was set."},
+  {HPDF_PAGE_INVALID_DIRECTION, "An invalid page-direction was set."},
+  {HPDF_INVALID_FONT, "An invalid font-handle was specified."},
+  {0, NULL}};
+
 /* * */
 
 void HPDF_STDCALL LclErrHandler(
@@ -257,15 +369,32 @@ void HPDF_STDCALL LclErrHandler(
 {
   char ErrStr[128];
   lua_State * L = (lua_State *) UserPtr;
+  const LclErrMsgType * it;
 
   /* TODO
   [ ] Make error more descriptive
   [ ] Use Lua concatentation instead of sprintf
   */
 
-  sprintf(ErrStr, "HPDF error 0x%04X, detail %u", (HPDF_UINT) ErrNum,
-    (HPDF_UINT) DetailNum);
-  lua_pushstring(L, ErrStr);
+  for (it=CnErrorMessages; it->name; ++it)
+  {
+    if (it->value==ErrNum)
+    {
+      lua_pushstring(L, it->name);
+      if (DetailNum != 0)
+      {
+        lua_pushfstring(L, "(detail %d)", DetailNum);
+        lua_concat(L, 2);
+      }
+      break;
+    }
+  }
+  if (!it->name)
+  {
+    sprintf(ErrStr, "HPDF error 0x%04X, detail %u", (HPDF_UINT) ErrNum,
+      (HPDF_UINT) DetailNum);
+    lua_pushstring(L, ErrStr);
+  }
   lua_error(L);
 }
 
@@ -1528,6 +1657,19 @@ static int LclUseCNTEncodings(lua_State *L)
 
 /* * */
 
+static int LclUseUTFEncodings(lua_State *L)
+
+  /* HPDF_STATUS <- hpdf.UseUTFEncodings(pdf) */
+
+{
+  HPDF_Doc pdf = LclHandleGet(L, CnHndDoc, 1);
+  HPDF_STATUS result = HPDF_UseUTFEncodings(pdf);
+  lua_pushinteger(L, result);
+  return 1;
+}
+
+/* * */
+
 static int LclPage_CreateTextAnnot(lua_State *L)
 
   /* HPDF_Annotation <- hpdf.Page_CreateTextAnnot(page, rect, text, encoder) */
@@ -2092,29 +2234,34 @@ static int LclFont_TextWidth(lua_State *L)
 
 static int LclFont_MeasureText(lua_State *L)
 
-  /* integer <- hpdf.Font_MeasureText(font, text, len, width,
+  /* integer <- hpdf.Font_MeasureText(font, text, width,
      font_size, char_space, word_space, wordwrap, real_width) */
 
 {
   HPDF_UINT result;
   HPDF_REAL real_width, * real_width_ptr;
   HPDF_Font font = LclHandleGet(L, CnHndFont, 1);
-  const HPDF_BYTE * text = (HPDF_BYTE *) luaL_checkstring(L, 2);
-  HPDF_UINT len = luaL_checkinteger(L, 3);
-  HPDF_REAL width = LclCheckReal(L, 4);
-  HPDF_REAL font_size = LclCheckReal(L, 5);
-  HPDF_REAL char_space = LclCheckReal(L, 6);
-  HPDF_REAL word_space = LclCheckReal(L, 7);
-  HPDF_BOOL wordwrap = lua_toboolean(L, 8);
-  if (lua_isnumber(L, 9)) {
-    real_width = (HPDF_REAL) lua_tonumber(L, 9);
+  size_t len_;
+  const HPDF_BYTE * text = (HPDF_BYTE *) luaL_checklstring(L, 2, &len_);
+  HPDF_UINT len = (HPDF_UINT)len_;
+  HPDF_REAL width = LclCheckReal(L, 3);
+  HPDF_REAL font_size = LclCheckReal(L, 4);
+  HPDF_REAL char_space = LclCheckReal(L, 5);
+  HPDF_REAL word_space = LclCheckReal(L, 6);
+  HPDF_BOOL wordwrap = lua_toboolean(L, 7);
+  if (lua_isnumber(L, 8)) {
+    real_width = (HPDF_REAL) lua_tonumber(L, 8);
     real_width_ptr = &real_width;
   }
   else real_width_ptr = (HPDF_REAL *) 0;
   result = HPDF_Font_MeasureText(font, text, len, width,
     font_size, char_space, word_space, wordwrap, real_width_ptr);
   lua_pushinteger(L, result);
-  return 1;
+  if (real_width_ptr) {
+    lua_pushnumber(L, real_width);
+    return 2;
+  } else
+    return 1;
 }
 
 /* * */
@@ -2758,9 +2905,9 @@ static int LclPage_SetDash(lua_State *L)
   }
   else {
     luaL_argcheck(L, lua_istable(L, 2), 2, "expecting dash mode table");
-    mode.num_ptn = luaL_checkinteger(L, 3);
+    mode.num_ptn = lua_rawlen(L, 2);
     if (mode.num_ptn <= 8) {
-      mode.phase = luaL_checkinteger(L, 4);
+      mode.phase = luaL_checkinteger(L, 3);
       for (J = 0; J < mode.num_ptn; J++) {
         int Dash;
         /* Stk: ... */
@@ -3818,6 +3965,7 @@ int luaopen_hpdf(
     {"UseKREncodings", LclUseKREncodings},
     {"UseCNSEncodings", LclUseCNSEncodings},
     {"UseCNTEncodings", LclUseCNTEncodings},
+    {"UseUTFEncodings", LclUseUTFEncodings},
     {"Page_CreateTextAnnot", LclPage_CreateTextAnnot},
     {"Page_CreateLinkAnnot", LclPage_CreateLinkAnnot},
     {"Page_CreateURILinkAnnot", LclPage_CreateURILinkAnnot},
