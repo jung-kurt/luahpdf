@@ -1657,16 +1657,16 @@ static int LclUseCNTEncodings(lua_State *L)
 
 /* * */
 
-// static int LclUseUTFEncodings(lua_State *L)
-// 
-//   /* HPDF_STATUS <- hpdf.UseUTFEncodings(pdf) */
-// 
-// {
-//   HPDF_Doc pdf = LclHandleGet(L, CnHndDoc, 1);
-//   HPDF_STATUS result = HPDF_UseUTFEncodings(pdf);
-//   lua_pushinteger(L, result);
-//   return 1;
-// }
+static int LclUseUTFEncodings(lua_State *L)
+
+  /* HPDF_STATUS <- hpdf.UseUTFEncodings(pdf) */
+ 
+{
+  HPDF_Doc pdf = LclHandleGet(L, CnHndDoc, 1);
+  HPDF_STATUS result = HPDF_UseUTFEncodings(pdf);
+  lua_pushinteger(L, result);
+  return 1;
+}
 
 /* * */
 
@@ -3809,8 +3809,6 @@ static void LclConstRegister(
     /* limitation of object implementation (PDF1.4) */
     {"LIMIT_MAX_INT", HPDF_LIMIT_MAX_INT},
     {"LIMIT_MIN_INT", HPDF_LIMIT_MIN_INT},
-    {"LIMIT_MAX_REAL", HPDF_LIMIT_MAX_REAL},
-    {"LIMIT_MIN_REAL", HPDF_LIMIT_MIN_REAL},
     {"LIMIT_MAX_STRING_LEN", HPDF_LIMIT_MAX_STRING_LEN},
     {"LIMIT_MAX_NAME_LEN", HPDF_LIMIT_MAX_NAME_LEN},
     {"LIMIT_MAX_ARRAY", HPDF_LIMIT_MAX_ARRAY},
@@ -3862,6 +3860,12 @@ static void LclConstRegister(
     lua_setfield(L, -2, KeyIntPtr->Str);
     /* Stk: ... Namespace */
   }
+
+  lua_pushnumber(L, HPDF_LIMIT_MIN_REAL);
+  lua_setfield(L, -2, "HPDF_LIMIT_MIN_REAL");
+
+  lua_pushnumber(L, HPDF_LIMIT_MAX_REAL);
+  lua_setfield(L, -2, "HPDF_LIMIT_MAX_REAL");
 
   lua_pushnumber(L, HPDF_DEF_PAGE_WIDTH);
   lua_setfield(L, -2, "DEF_PAGE_WIDTH");
@@ -3965,7 +3969,7 @@ int luaopen_hpdf(
     {"UseKREncodings", LclUseKREncodings},
     {"UseCNSEncodings", LclUseCNSEncodings},
     {"UseCNTEncodings", LclUseCNTEncodings},
-    // {"UseUTFEncodings", LclUseUTFEncodings},
+    {"UseUTFEncodings", LclUseUTFEncodings},
     {"Page_CreateTextAnnot", LclPage_CreateTextAnnot},
     {"Page_CreateLinkAnnot", LclPage_CreateLinkAnnot},
     {"Page_CreateURILinkAnnot", LclPage_CreateURILinkAnnot},
