@@ -5,7 +5,6 @@ include .config
 
 PREFIX ?= /usr/local
 MODDIR ?= $(PREFIX)/lib/lua/5.2
-LUALIB ?= -llua5.2
 LUAINC ?= -I/usr/include/lua5.2
 HPDFLIB ?= -lhpdf
 HPDFINC ?=

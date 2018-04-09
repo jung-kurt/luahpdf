@@ -4,10 +4,10 @@ $Id: hpdf.c 32002 2010-11-10 12:37:13Z kurt $
 
 */
 
+#include <hpdf.h>
+#include <lauxlib.h>
 #include <lua.h>
 #include <lualib.h>
-#include <lauxlib.h>
-#include <hpdf.h>
 
 #ifndef HPDF_SHARED
   typedef void *HPDF_HANDLE;
@@ -24,23 +24,25 @@ $Id: hpdf.c 32002 2010-11-10 12:37:13Z kurt $
 #define LclCheckU16(L, P) (HPDF_UINT16) luaL_checkinteger((L), (P))
 
 #if !defined(LUA_VERSION_NUM) || LUA_VERSION_NUM < 502
-static void luaL_setfuncs (
-  lua_State *l,
-  const luaL_Reg *reg,
+LUALIB_API void luaL_setfuncs (
+  lua_State *L,
+  const luaL_Reg *l,
   int nup)
 
 {
   int i;
 
-  luaL_checkstack(l, nup, "too many upvalues");
-  for (; reg->name != NULL; reg++) {  /* fill the table with given functions */
-    for (i = 0; i < nup; i++)  /* copy upvalues to the top */
-      lua_pushvalue(l, -nup);
-    lua_pushcclosure(l, reg->func, nup);  /* closure with those upvalues */
-    lua_setfield(l, -(nup + 2), reg->name);
+  luaL_checkstack(L, nup, "too many upvalues");
+  for (; l->name != NULL; l++) {  /* fill the table with given functions */
+    for (i = 0; i < nup; i++) { /* copy upvalues to the top */
+      lua_pushvalue(L, -nup);
+    }
+    lua_pushcclosure(L, l->func, nup);  /* closure with those upvalues */
+    lua_setfield(L, -(nup + 2), l->name);
   }
-  lua_pop(l, nup);  /* remove upvalues */
+  lua_pop(L, nup);  /* remove upvalues */
 }
+#define lua_rawlen lua_objlen
 #endif
 
 typedef enum LclHndCatEnum {
@@ -477,8 +479,11 @@ static HPDF_REAL LclTblNum(
   /* Stk: ... Tbl NameStr */
   lua_rawget(L, -2);
   /* Stk: ... Tbl Num? */
-  if (lua_isnumber(L, -1)) Num = (HPDF_REAL) lua_tonumber(L, -1);
-  else luaL_error(L, "field " LUA_QS " not found", NameStr);
+  if (lua_isnumber(L, -1)) {
+    Num = (HPDF_REAL) lua_tonumber(L, -1);
+  } else {
+    luaL_error(L, "field " LUA_QS " not found", NameStr);
+  }
   lua_pop(L, 1);
   /* Stk: ... Tbl */
   return Num;
@@ -499,8 +504,11 @@ static HPDF_INT LclTblIntOpt(
   /* Stk: ... Tbl NameStr */
   lua_rawget(L, -2);
   /* Stk: ... Tbl Num? */
-  if (lua_isnumber(L, -1)) Num = lua_tointeger(L, -1);
-  else Num = Default;
+  if (lua_isnumber(L, -1)) {
+    Num = lua_tointeger(L, -1);
+  } else {
+    Num = Default;
+  }
   lua_pop(L, 1);
   /* Stk: ... Tbl */
   return Num;
@@ -520,8 +528,11 @@ static HPDF_INT LclTblInt(
   /* Stk: ... Tbl NameStr */
   lua_rawget(L, -2);
   /* Stk: ... Tbl Num? */
-  if (lua_isnumber(L, -1)) Num = lua_tointeger(L, -1);
-  else luaL_error(L, "field " LUA_QS " not found", NameStr);
+  if (lua_isnumber(L, -1)) {
+    Num = lua_tointeger(L, -1);
+  } else {
+    luaL_error(L, "field " LUA_QS " not found", NameStr);
+  }
   lua_pop(L, 1);
   /* Stk: ... Tbl */
   return Num;
@@ -543,8 +554,11 @@ static char LclTblChar(
   lua_rawget(L, -2);
   /* Stk: ... RctTbl Str? */
   Str = lua_tostring(L, -1);
-  Ch = *Str;
-  if (! Str) luaL_error(L, "expecting character field " LUA_QS, NameStr);
+  if (! Str) {
+    luaL_error(L, "expecting character field " LUA_QS, NameStr);
+  } else {
+    Ch = *Str;
+  }
   lua_pop(L, 1);
   /* Stk: ... RctTbl */
   return Ch;
@@ -929,11 +943,12 @@ static int LclSaveToFile(lua_State *L)
   HPDF_STATUS result;
   HPDF_Doc pdf = LclHandleGet(L, CnHndDoc, 1);
   const char * file_name = luaL_checkstring(L, 2);
-  fl = fopen(file_name, "w");
-  result = (fl == (FILE *) 0) ? 0x1016 : HPDF_OK;
-  if (HPDF_OK == result) {
+  fl = fopen(file_name, "we");
+  if (fl) {
     fclose(fl);
     result = HPDF_SaveToFile(pdf, file_name);
+  } else {
+    result = 0x1016;
   }
   lua_pushinteger(L, result);
   return 1;
@@ -1874,8 +1889,9 @@ static int LclImage_GetSize(lua_State *L)
   int RetCount;
   HPDF_Image image = LclHandleGet(L, CnHndImage, 1);
   HPDF_Point result = HPDF_Image_GetSize(image);
-  if ((result.x == 0) && (result.y == 0)) RetCount = 0;
-  else {
+  if ((result.x == 0) && (result.y == 0)) {
+    RetCount = 0;
+  } else {
     LclPointPush(L, result);
     RetCount = 1;
   }
@@ -1899,8 +1915,9 @@ static int LclImage_GetSize2(lua_State *L)
     lua_pushnumber(L, size.x);
     lua_pushnumber(L, size.y);
     RetCount = 2;
+  } else {
+   RetCount = 0;
   }
-  else RetCount = 0;
   return RetCount;
 }
 
@@ -2252,8 +2269,9 @@ static int LclFont_MeasureText(lua_State *L)
   if (lua_isnumber(L, 8)) {
     real_width = (HPDF_REAL) lua_tonumber(L, 8);
     real_width_ptr = &real_width;
+  } else {
+    real_width_ptr = (HPDF_REAL *) 0;
   }
-  else real_width_ptr = (HPDF_REAL *) 0;
   result = HPDF_Font_MeasureText(font, text, len, width,
     font_size, char_space, word_space, wordwrap, real_width_ptr);
   lua_pushinteger(L, result);
@@ -2349,8 +2367,9 @@ static int LclPage_MeasureText(lua_State *L)
   if (lua_isnumber(L, 5)) {
     real_width = (HPDF_REAL) lua_tonumber(L, 5);
     real_width_ptr = &real_width;
+  } else {
+    real_width_ptr = (HPDF_REAL *) 0;
   }
-  else real_width_ptr = (HPDF_REAL *) 0;
   result = HPDF_Page_MeasureText(page, text, width, wordwrap, real_width_ptr);
   lua_pushinteger(L, result);
   return 1;
@@ -2429,8 +2448,9 @@ static int LclPage_GetCurrentPos2(lua_State *L)
     lua_pushnumber(L, pos.y);
     /* Stk: ... X Y */
     RetCount = 2;
+  } else {
+    RetCount = 0;
   }
-  else RetCount = 0;
   return RetCount;
 }
 
@@ -2467,8 +2487,9 @@ static int LclPage_GetCurrentTextPos2(lua_State *L)
     lua_pushnumber(L, pos.y);
     /* Stk: ... Y */
     RetCount = 2;
+  } else {
+    RetCount = 0;
   }
-  else RetCount = 0;
   return RetCount;
 }
 
@@ -2892,22 +2913,23 @@ static int LclPage_SetDash(lua_State *L)
   /* HPDF_STATUS <- hpdf.Page_SetDash(page, dash_ptn, num_param, phase) */
 
 {
-  int J, Tp;
+  int Tp;
   HPDF_DashMode mode;
   HPDF_STATUS result;
   HPDF_Page page;
 
   page = LclHandleGet(L, CnHndPage, 1);
   Tp = lua_type(L, 2);
-  if ((LUA_TNIL == Tp) || (LUA_TNONE == Tp)) {
-    mode.num_ptn = 0;
-    mode.phase = 0;
-  }
-  else {
+
+  mode.num_ptn = 0;
+  mode.phase = 0;
+
+  if (!(LUA_TNIL == Tp) && !(LUA_TNONE == Tp)) {
     luaL_argcheck(L, lua_istable(L, 2), 2, "expecting dash mode table");
     mode.num_ptn = lua_rawlen(L, 2);
     if (mode.num_ptn <= 8) {
       mode.phase = luaL_checkinteger(L, 3);
+      int J;
       for (J = 0; J < mode.num_ptn; J++) {
         int Dash;
         /* Stk: ... */
