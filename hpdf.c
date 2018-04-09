@@ -554,11 +554,10 @@ static char LclTblChar(
   lua_rawget(L, -2);
   /* Stk: ... RctTbl Str? */
   Str = lua_tostring(L, -1);
-  // cppcheck-suppress redundantAssignment
-  // cppcheck-suppress nullPointerRedundantCheck
-  Ch = *Str;
   if (! Str) {
     luaL_error(L, "expecting character field " LUA_QS, NameStr);
+  } else {
+    Ch = *Str;
   }
   lua_pop(L, 1);
   /* Stk: ... RctTbl */
@@ -945,10 +944,11 @@ static int LclSaveToFile(lua_State *L)
   HPDF_Doc pdf = LclHandleGet(L, CnHndDoc, 1);
   const char * file_name = luaL_checkstring(L, 2);
   fl = fopen(file_name, "we");
-  result = (fl == (FILE *) 0) ? 0x1016 : HPDF_OK;
-  fclose(fl);
-  if (HPDF_OK == result) {
+  if (fl) {
+    fclose(fl);
     result = HPDF_SaveToFile(pdf, file_name);
+  } else {
+    result = 0x1016;
   }
   lua_pushinteger(L, result);
   return 1;
